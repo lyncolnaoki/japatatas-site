@@ -4,6 +4,12 @@
     box-sizing: border-box;
     list-style: none;
     font-family: "Montserrat", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -16,31 +22,72 @@ body {
 /* ===== HEADER ===== */
 header {
     position: fixed;
-    width: 90vw;
+    width: 100%;
     top: 0;
-    padding: 20px 50px;
+    left: 0;
+    padding: 15px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 3;
+    z-index: 10;
+    background: linear-gradient(180deg, rgba(26, 5, 5, 0.9) 0%, rgba(26, 5, 5, 0) 100%);
 }
 
 .logo {
     font-family: "Orbitron", sans-serif;
-    font-size: 2.2rem;
+    font-size: clamp(1.3rem, 5vw, 2.2rem);
     font-weight: 900;
     color: #ffd700;
     text-shadow: 
         0 0 10px rgba(227, 6, 19, 0.8),
         0 0 20px rgba(255, 140, 0, 0.5),
         2px 2px 0 #e30613;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
 }
 
+/* ===== MENU HAMBÚRGUER ===== */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 20;
+    padding: 0;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #ffd700;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(227, 6, 19, 0.8);
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+    background: #e30613;
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+    background: #e30613;
+}
+
+/* ===== NAVEGAÇÃO ===== */
 header nav ul {
     display: flex;
-    gap: 48px;
+    gap: 40px;
 }
 
 header nav ul li {
@@ -50,6 +97,7 @@ header nav ul li {
     font-weight: 600;
     color: #ffd700;
     transition: color 0.2s ease;
+    font-size: 1rem;
 }
 
 header nav ul li:hover {
@@ -74,6 +122,7 @@ header nav ul li:hover::after {
 /* ===== CONTAINER PRINCIPAL ===== */
 .container {
     height: 100vh;
+    height: 100dvh; /* corrige bug da barra de endereço no mobile */
     position: relative;
     background: 
         radial-gradient(circle at 20% 30%, rgba(227, 6, 19, 0.25) 0%, transparent 50%),
@@ -85,8 +134,8 @@ header nav ul li:hover::after {
 .container::before {
     content: '';
     position: absolute;
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 140, 0, 0.25) 0%, rgba(227, 6, 19, 0) 70%);
     top: 50%;
@@ -110,10 +159,12 @@ header nav ul li:hover::after {
 
 /* ===== LISTA DE PRODUTOS ===== */
 .list {
-    width: 80%;
+    width: 90%;
     height: 100%;
     margin: 0 auto;
     position: relative;
+    padding-top: 70px;
+    padding-bottom: 100px;
 }
 
 .item {
@@ -125,6 +176,7 @@ header nav ul li:hover::after {
     opacity: 0;
     transform: translateX(100vw);
     transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+    padding: 0 20px;
 }
 
 .active {
@@ -132,6 +184,7 @@ header nav ul li:hover::after {
     transform: translateX(0);
 }
 
+/* ===== IMAGEM DO PRODUTO ===== */
 .product-img {
     width: 45%;
     height: 100%;
@@ -143,8 +196,9 @@ header nav ul li:hover::after {
 }
 
 .product-img img {
-    max-width: 85%;
-    max-height: 65%;
+    max-width: 90%;
+    max-height: 70%;
+    object-fit: contain;
     border-radius: 20px;
     box-shadow: 
         0 0 40px rgba(227, 6, 19, 0.5),
@@ -153,7 +207,7 @@ header nav ul li:hover::after {
     transform: translateX(400px);
     opacity: 0;
     transition: transform 0.6s ease, opacity 0.6s ease;
-    transition-delay: 0.5s;
+    transition-delay: 0.4s;
 }
 
 .active .product-img img {
@@ -164,7 +218,7 @@ header nav ul li:hover::after {
 /* ===== CONTEÚDO ===== */
 .content {
     width: 55%;
-    padding-right: 80px;
+    padding-right: 60px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -173,11 +227,11 @@ header nav ul li:hover::after {
 }
 
 .product-tag {
-    font-size: 1rem;
+    font-size: clamp(0.75rem, 2vw, 1rem);
     text-transform: uppercase;
     color: #ffd700;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     margin-bottom: 10px;
     padding: 6px 16px;
     background: linear-gradient(90deg, #e30613, #ff8c00);
@@ -186,7 +240,7 @@ header nav ul li:hover::after {
     transform: translateX(400px);
     opacity: 0;
     transition: transform 0.6s ease, opacity 0.6s ease;
-    transition-delay: 0.5s;
+    transition-delay: 0.4s;
 }
 
 .active .product-tag {
@@ -195,10 +249,10 @@ header nav ul li:hover::after {
 }
 
 .product-name {
-    font-size: 4.5rem;
+    font-size: clamp(1.8rem, 6vw, 4.5rem);
     font-family: "Orbitron", sans-serif;
     line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #ffd700;
     text-shadow: 
         3px 3px 0 #e30613,
@@ -206,7 +260,7 @@ header nav ul li:hover::after {
     transform: translateX(400px);
     opacity: 0;
     transition: transform 0.6s ease, opacity 0.6s ease;
-    transition-delay: 0.5s;
+    transition-delay: 0.4s;
 }
 
 .active .product-name {
@@ -215,15 +269,15 @@ header nav ul li:hover::after {
 }
 
 .description {
-    font-size: 1.1rem;
+    font-size: clamp(0.85rem, 2.2vw, 1.1rem);
     color: #ffe8c4;
     line-height: 1.6;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     max-width: 600px;
     transform: translateX(400px);
     opacity: 0;
     transition: transform 0.6s ease, opacity 0.6s ease;
-    transition-delay: 0.5s;
+    transition-delay: 0.4s;
 }
 
 .active .description {
@@ -238,7 +292,7 @@ header nav ul li:hover::after {
     background-size: 200% auto;
     border-radius: 30px;
     color: #1a0505;
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -248,7 +302,7 @@ header nav ul li:hover::after {
     transform: translateX(400px);
     opacity: 0;
     transition: transform 0.6s ease, opacity 0.6s ease, background-position 0.5s ease;
-    transition-delay: 0.5s;
+    transition-delay: 0.4s;
 }
 
 .active .btn {
@@ -256,7 +310,8 @@ header nav ul li:hover::after {
     opacity: 1;
 }
 
-.btn:hover {
+.btn:hover,
+.btn:active {
     background-position: right center;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
 }
@@ -264,18 +319,19 @@ header nav ul li:hover::after {
 /* ===== SETAS ===== */
 .arrows {
     position: absolute;
-    width: 90%;
+    width: 95%;
     display: flex;
     justify-content: space-between;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
+    pointer-events: none;
 }
 
 .arrow-btn {
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     cursor: pointer;
     background: linear-gradient(135deg, #e30613, #ff8c00);
@@ -286,9 +342,11 @@ header nav ul li:hover::after {
     justify-content: center;
     box-shadow: 0 0 20px rgba(227, 6, 19, 0.6);
     transition: all 0.3s ease;
+    pointer-events: auto;
 }
 
-.arrow-btn:hover {
+.arrow-btn:hover,
+.arrow-btn:active {
     background: linear-gradient(135deg, #ff8c00, #ffd700);
     color: #e30613;
     transform: scale(1.1);
@@ -298,19 +356,19 @@ header nav ul li:hover::after {
 /* ===== INDICADORES ===== */
 .indicators {
     position: absolute;
-    bottom: 40px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
     z-index: 5;
 }
 
 .numbers {
     font-family: "Orbitron", sans-serif;
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 6vw, 3rem);
     font-weight: 800;
     color: transparent;
     -webkit-text-stroke: 2px #ffd700;
@@ -319,11 +377,11 @@ header nav ul li:hover::after {
 
 .dots {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .dot {
-    width: 40px;
+    width: 30px;
     height: 4px;
     background-color: rgba(255, 215, 0, 0.2);
     border-radius: 2px;
@@ -333,7 +391,7 @@ header nav ul li:hover::after {
 .dot.active {
     background: linear-gradient(90deg, #e30613, #ffd700);
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-    width: 60px;
+    width: 50px;
 }
 
 /* ===== CÍRCULOS DECORATIVOS ===== */
@@ -344,6 +402,7 @@ header nav ul li:hover::after {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .circle {
@@ -397,5 +456,235 @@ header nav ul li:hover::after {
     50% {
         transform: translateY(-30px) scale(1.1);
         opacity: 1;
+    }
+}
+
+/* =========================================================
+   RESPONSIVO — MOBILE E TABLET
+   ========================================================= */
+
+/* TABLETS */
+@media (max-width: 1024px) {
+    .product-name {
+        font-size: clamp(1.8rem, 5.5vw, 3.5rem);
+    }
+    .content {
+        padding-right: 30px;
+    }
+    .product-img {
+        width: 42%;
+    }
+    .content {
+        width: 58%;
+    }
+}
+
+/* CELULARES */
+@media (max-width: 768px) {
+
+    header {
+        padding: 12px 20px;
+    }
+
+    /* Mostra o botão hambúrguer */
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Menu vira painel lateral deslizante */
+    header nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 280px;
+        height: 100vh;
+        height: 100dvh;
+        background: linear-gradient(180deg, #2b0a0a 0%, #1a0505 100%);
+        border-left: 2px solid #e30613;
+        box-shadow: -10px 0 40px rgba(227, 6, 19, 0.5);
+        transition: right 0.4s ease;
+        z-index: 15;
+        padding-top: 90px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    header nav.active {
+        right: 0;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    header nav ul li {
+        font-size: 1.3rem;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+    }
+
+    /* Layout do item em coluna */
+    .item {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 20px;
+        gap: 15px;
+    }
+
+    .product-img {
+        width: 100%;
+        height: 40%;
+        flex-shrink: 0;
+    }
+
+    .product-img img {
+        max-width: 70%;
+        max-height: 100%;
+        border-width: 2px;
+    }
+
+    .content {
+        width: 100%;
+        padding: 0 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .product-tag {
+        font-size: 0.7rem;
+        padding: 5px 14px;
+        letter-spacing: 1.5px;
+    }
+
+    .product-name {
+        font-size: clamp(1.6rem, 7vw, 2.4rem);
+        text-shadow: 2px 2px 0 #e30613, 0 0 20px rgba(255, 140, 0, 0.6);
+        margin-bottom: 12px;
+    }
+
+    .description {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        max-width: 95%;
+    }
+
+    .btn {
+        padding: 12px 28px;
+        font-size: 0.85rem;
+    }
+
+    /* Setas menores e mais próximas das bordas */
+    .arrows {
+        width: 96%;
+        top: 32%;
+    }
+
+    .arrow-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Indicadores menores */
+    .indicators {
+        bottom: 15px;
+        gap: 6px;
+    }
+
+    .numbers {
+        font-size: 1.8rem;
+        -webkit-text-stroke: 1.5px #ffd700;
+    }
+
+    .dot {
+        width: 22px;
+        height: 3px;
+    }
+
+    .dot.active {
+        width: 38px;
+    }
+
+    /* Círculos menores para não poluir */
+    .circle:nth-child(1) { width: 120px; height: 120px; }
+    .circle:nth-child(2) { width: 180px; height: 180px; }
+    .circle:nth-child(3) { width: 100px; height: 100px; }
+    .circle:nth-child(4) { width: 80px; height: 80px; }
+}
+
+/* CELULARES PEQUENOS */
+@media (max-width: 400px) {
+    .logo {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+    .product-name {
+        font-size: 1.5rem;
+    }
+    .description {
+        font-size: 0.8rem;
+    }
+    .arrow-btn {
+        width: 36px;
+        height: 36px;
+    }
+    .arrows {
+        top: 30%;
+    }
+}
+
+/* CELULAR DEITADO (landscape) */
+@media (max-width: 900px) and (orientation: landscape) {
+    .item {
+        flex-direction: row;
+        justify-content: center;
+        padding-top: 60px;
+    }
+
+    .product-img {
+        width: 40%;
+        height: 80%;
+    }
+
+    .product-img img {
+        max-height: 90%;
+        max-width: 95%;
+    }
+
+    .content {
+        width: 60%;
+        padding: 0 15px;
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .description {
+        font-size: 0.8rem;
+        max-width: 100%;
+    }
+
+    .product-name {
+        font-size: 1.6rem;
+    }
+
+    .arrows {
+        top: 50%;
+        width: 98%;
+    }
+
+    .indicators {
+        bottom: 10px;
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .numbers {
+        font-size: 1.5rem;
     }
 }
