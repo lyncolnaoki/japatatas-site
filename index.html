@@ -2,18 +2,27 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#e30613">
+    <meta name="description" content="Japatatas - Batatas Recheadas. As melhores batatas recheadas da cidade!">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <title>Japatatas | Batatas Recheadas </title>
+    <title>Japatatas | Batatas Recheadas</title>
 </head>
 
 <body>
     <header>
         <div class="logo">JAPATATAS</div>
-        <nav>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="navMenu">
             <ul>
                 <li>Home</li>
                 <li>Cardápio</li>
@@ -31,10 +40,10 @@
         </div>
 
         <div class="list">
-            <!-- ITEM 1 - Pizza de Frango com Catupiry -->
+            <!-- ITEM 1 - Batata Frango Cremoso -->
             <div class="item active">
                 <div class="product-img">
-                    <img src="FRANGO CREMOSO COLOR.jpg" alt="Pizza de Frango com Catupiry">
+                    <img src="FRANGO CREMOSO COLOR.jpg" alt="Batata Frango Cremoso">
                 </div>
                 <div class="content">
                     <p class="product-tag">Mais Pedido</p>
@@ -46,10 +55,10 @@
                 </div>
             </div>
 
-            <!-- ITEM 2 - Batata com Cheddar e Bacon -->
+            <!-- ITEM 2 - Batata Pizza -->
             <div class="item">
                 <div class="product-img">
-                    <img src="NAPOLITANA.jpg" alt="Batata com Cheddar e Bacon">
+                    <img src="NAPOLITANA.jpg" alt="Batata Pizza">
                 </div>
                 <div class="content">
                     <p class="product-tag">Especial da Casa</p>
@@ -61,10 +70,10 @@
                 </div>
             </div>
 
-            <!-- ITEM 3 - Porção com Doritos e Cheddar -->
+            <!-- ITEM 3 - Batata Nachos -->
             <div class="item">
                 <div class="product-img">
-                    <img src="nachos.jpg" alt="Porção Doritos com Cheddar">
+                    <img src="nachos.jpg" alt="Batata Nachos">
                 </div>
                 <div class="content">
                     <p class="product-tag">Novidade</p>
@@ -76,10 +85,10 @@
                 </div>
             </div>
 
-            <!-- ITEM 4 - Hot Dog Completo -->
+            <!-- ITEM 4 - Batata Hot Dog -->
             <div class="item">
                 <div class="product-img">
-                    <img src="hotdog.jpg" alt="Hot Dog Completo">
+                    <img src="hotdog.jpg" alt="Batata Hot Dog">
                 </div>
                 <div class="content">
                     <p class="product-tag">Clássico</p>
@@ -93,13 +102,13 @@
         </div>
 
         <div class="arrows">
-            <button class="arrow-btn" id="prev">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <button class="arrow-btn" id="prev" aria-label="Anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
                     <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                 </svg>
             </button>
-            <button class="arrow-btn" id="next">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <button class="arrow-btn" id="next" aria-label="Próximo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
                 </svg>
             </button>
