@@ -1,0 +1,401 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    background-color: #1a0505;
+    color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+/* ===== HEADER ===== */
+header {
+    position: fixed;
+    width: 90vw;
+    top: 0;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 3;
+}
+
+.logo {
+    font-family: "Orbitron", sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 
+        0 0 10px rgba(227, 6, 19, 0.8),
+        0 0 20px rgba(255, 140, 0, 0.5),
+        2px 2px 0 #e30613;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+header nav ul {
+    display: flex;
+    gap: 48px;
+}
+
+header nav ul li {
+    cursor: pointer;
+    position: relative;
+    padding: 5px 0;
+    font-weight: 600;
+    color: #ffd700;
+    transition: color 0.2s ease;
+}
+
+header nav ul li:hover {
+    color: #ff8c00;
+}
+
+header nav ul li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #e30613, #ffd700);
+    transition: width 0.2s ease;
+}
+
+header nav ul li:hover::after {
+    width: 100%;
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.container {
+    height: 100vh;
+    position: relative;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(227, 6, 19, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 140, 0, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, #1a0505 0%, #2b0a0a 50%, #1a0505 100%);
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 140, 0, 0.25) 0%, rgba(227, 6, 19, 0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(60px);
+    z-index: 1;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
+
+/* ===== LISTA DE PRODUTOS ===== */
+.list {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.item {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: translateX(100vw);
+    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+}
+
+.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.product-img {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.product-img img {
+    max-width: 85%;
+    max-height: 65%;
+    border-radius: 20px;
+    box-shadow: 
+        0 0 40px rgba(227, 6, 19, 0.5),
+        0 0 80px rgba(255, 140, 0, 0.3);
+    border: 3px solid #ffd700;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+}
+
+.active .product-img img {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* ===== CONTEÚDO ===== */
+.content {
+    width: 55%;
+    padding-right: 80px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 2;
+    flex-direction: column;
+}
+
+.product-tag {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #ffd700;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    padding: 6px 16px;
+    background: linear-gradient(90deg, #e30613, #ff8c00);
+    border-radius: 20px;
+    display: inline-block;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+}
+
+.active .product-tag {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.product-name {
+    font-size: 4.5rem;
+    font-family: "Orbitron", sans-serif;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: #ffd700;
+    text-shadow: 
+        3px 3px 0 #e30613,
+        0 0 30px rgba(255, 140, 0, 0.6);
+    transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+}
+
+.active .product-name {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #ffe8c4;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 600px;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+}
+
+.active .description {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* ===== BOTÃO ===== */
+.btn {
+    padding: 14px 32px;
+    background: linear-gradient(90deg, #e30613, #ff8c00, #ffd700);
+    background-size: 200% auto;
+    border-radius: 30px;
+    color: #1a0505;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: 2px solid #ffd700;
+    box-shadow: 0 0 20px rgba(227, 6, 19, 0.6);
+    transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease, background-position 0.5s ease;
+    transition-delay: 0.5s;
+}
+
+.active .btn {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.btn:hover {
+    background-position: right center;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+/* ===== SETAS ===== */
+.arrows {
+    position: absolute;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+.arrow-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: linear-gradient(135deg, #e30613, #ff8c00);
+    border: 2px solid #ffd700;
+    color: #ffd700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(227, 6, 19, 0.6);
+    transition: all 0.3s ease;
+}
+
+.arrow-btn:hover {
+    background: linear-gradient(135deg, #ff8c00, #ffd700);
+    color: #e30613;
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+}
+
+/* ===== INDICADORES ===== */
+.indicators {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 5;
+}
+
+.numbers {
+    font-family: "Orbitron", sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 2px #ffd700;
+    text-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+}
+
+.dots {
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 40px;
+    height: 4px;
+    background-color: rgba(255, 215, 0, 0.2);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: linear-gradient(90deg, #e30613, #ffd700);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    width: 60px;
+}
+
+/* ===== CÍRCULOS DECORATIVOS ===== */
+.tech-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 140, 0, 0.25);
+    animation: float 6s ease-in-out infinite;
+}
+
+.circle:nth-child(1) {
+    width: 200px;
+    height: 200px;
+    top: 10%;
+    left: 10%;
+    border-color: rgba(227, 6, 19, 0.4);
+    animation-delay: 0s;
+}
+
+.circle:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    top: 60%;
+    left: 80%;
+    border-color: rgba(255, 215, 0, 0.3);
+    animation-delay: 1.5s;
+}
+
+.circle:nth-child(3) {
+    width: 150px;
+    height: 150px;
+    top: 70%;
+    left: 20%;
+    border-color: rgba(255, 140, 0, 0.4);
+    animation-delay: 3s;
+}
+
+.circle:nth-child(4) {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+    left: 70%;
+    border-color: rgba(227, 6, 19, 0.3);
+    animation-delay: 4.5s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-30px) scale(1.1);
+        opacity: 1;
+    }
+}
