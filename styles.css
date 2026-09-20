@@ -1,3 +1,8 @@
+/* =========================================================
+   JAPATATAS — Estilos principais
+   Tema: vermelho, amarelo e laranja + botões iFood
+   ========================================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -19,7 +24,9 @@ body {
     overflow: hidden;
 }
 
-/* ===== HEADER ===== */
+/* =========================================================
+   HEADER
+   ========================================================= */
 header {
     position: fixed;
     width: 100%;
@@ -46,7 +53,9 @@ header {
     text-transform: uppercase;
 }
 
-/* ===== MENU HAMBÚRGUER ===== */
+/* =========================================================
+   MENU HAMBÚRGUER (mobile)
+   ========================================================= */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -84,7 +93,9 @@ header {
     background: #e30613;
 }
 
-/* ===== NAVEGAÇÃO ===== */
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
 header nav ul {
     display: flex;
     gap: 40px;
@@ -119,10 +130,12 @@ header nav ul li:hover::after {
     width: 100%;
 }
 
-/* ===== CONTAINER PRINCIPAL ===== */
+/* =========================================================
+   CONTAINER PRINCIPAL
+   ========================================================= */
 .container {
     height: 100vh;
-    height: 100dvh; /* corrige bug da barra de endereço no mobile */
+    height: 100dvh;
     position: relative;
     background: 
         radial-gradient(circle at 20% 30%, rgba(227, 6, 19, 0.25) 0%, transparent 50%),
@@ -144,6 +157,7 @@ header nav ul li:hover::after {
     filter: blur(60px);
     z-index: 1;
     animation: pulse 2s infinite alternate;
+    pointer-events: none;
 }
 
 @keyframes pulse {
@@ -157,7 +171,9 @@ header nav ul li:hover::after {
     }
 }
 
-/* ===== LISTA DE PRODUTOS ===== */
+/* =========================================================
+   LISTA DE PRODUTOS
+   ========================================================= */
 .list {
     width: 90%;
     height: 100%;
@@ -177,14 +193,18 @@ header nav ul li:hover::after {
     transform: translateX(100vw);
     transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
     padding: 0 20px;
+    pointer-events: none;
 }
 
-.active {
+.item.active {
     opacity: 1;
     transform: translateX(0);
+    pointer-events: auto;
 }
 
-/* ===== IMAGEM DO PRODUTO ===== */
+/* =========================================================
+   IMAGEM DO PRODUTO
+   ========================================================= */
 .product-img {
     width: 45%;
     height: 100%;
@@ -215,7 +235,9 @@ header nav ul li:hover::after {
     opacity: 1;
 }
 
-/* ===== CONTEÚDO ===== */
+/* =========================================================
+   CONTEÚDO (texto)
+   ========================================================= */
 .content {
     width: 55%;
     padding-right: 60px;
@@ -285,38 +307,70 @@ header nav ul li:hover::after {
     opacity: 1;
 }
 
-/* ===== BOTÃO ===== */
-.btn {
-    padding: 14px 32px;
-    background: linear-gradient(90deg, #e30613, #ff8c00, #ffd700);
-    background-size: 200% auto;
-    border-radius: 30px;
-    color: #1a0505;
+/* =========================================================
+   BOTÃO / LINK iFOOD (dentro do card)
+   ========================================================= */
+.ifood-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #EA1D2C; /* vermelho oficial iFood */
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
     font-size: clamp(0.85rem, 2.5vw, 1rem);
-    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
-    cursor: pointer;
+    padding: 14px 28px;
+    border-radius: 50px;
     border: 2px solid #ffd700;
-    box-shadow: 0 0 20px rgba(227, 6, 19, 0.6);
+    box-shadow: 
+        0 0 20px rgba(234, 29, 44, 0.6),
+        0 4px 12px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    width: fit-content;
+    margin-top: 8px;
+    /* animação de entrada */
     transform: translateX(400px);
     opacity: 0;
-    transition: transform 0.6s ease, opacity 0.6s ease, background-position 0.5s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease,
+                background 0.3s ease, box-shadow 0.3s ease;
     transition-delay: 0.4s;
 }
 
-.active .btn {
+.active .ifood-link {
     transform: translateX(0);
     opacity: 1;
 }
 
-.btn:hover,
-.btn:active {
-    background-position: right center;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+.ifood-link:hover,
+.ifood-link:active {
+    background: #c9151f;
+    box-shadow: 
+        0 0 30px rgba(234, 29, 44, 0.9),
+        0 6px 20px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05);
+    color: #fff;
 }
 
-/* ===== SETAS ===== */
+.ifood-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
+/* =========================================================
+   SETAS DE NAVEGAÇÃO
+   ========================================================= */
 .arrows {
     position: absolute;
     width: 95%;
@@ -343,6 +397,7 @@ header nav ul li:hover::after {
     box-shadow: 0 0 20px rgba(227, 6, 19, 0.6);
     transition: all 0.3s ease;
     pointer-events: auto;
+    touch-action: manipulation;
 }
 
 .arrow-btn:hover,
@@ -353,7 +408,9 @@ header nav ul li:hover::after {
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
 }
 
-/* ===== INDICADORES ===== */
+/* =========================================================
+   INDICADORES (número + dots)
+   ========================================================= */
 .indicators {
     position: absolute;
     bottom: 25px;
@@ -364,6 +421,7 @@ header nav ul li:hover::after {
     align-items: center;
     gap: 10px;
     z-index: 5;
+    pointer-events: none;
 }
 
 .numbers {
@@ -386,6 +444,8 @@ header nav ul li:hover::after {
     background-color: rgba(255, 215, 0, 0.2);
     border-radius: 2px;
     transition: all 0.3s ease;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .dot.active {
@@ -394,7 +454,9 @@ header nav ul li:hover::after {
     width: 50px;
 }
 
-/* ===== CÍRCULOS DECORATIVOS ===== */
+/* =========================================================
+   CÍRCULOS DECORATIVOS
+   ========================================================= */
 .tech-circle {
     position: absolute;
     top: 0;
@@ -403,6 +465,7 @@ header nav ul li:hover::after {
     height: 100%;
     overflow: hidden;
     pointer-events: none;
+    z-index: 0;
 }
 
 .circle {
@@ -410,6 +473,7 @@ header nav ul li:hover::after {
     border-radius: 50%;
     border: 1px solid rgba(255, 140, 0, 0.25);
     animation: float 6s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .circle:nth-child(1) {
@@ -460,38 +524,79 @@ header nav ul li:hover::after {
 }
 
 /* =========================================================
-   RESPONSIVO — MOBILE E TABLET
+   BOTÃO FLUTUANTE DO iFOOD
    ========================================================= */
+.ifood-float {
+    position: fixed;
+    bottom: 25px;
+    right: 20px;
+    height: 58px;
+    padding: 0 22px 0 18px;
+    border-radius: 50px;
+    background: #EA1D2C;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(234, 29, 44, 0.6);
+    z-index: 100;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #ffd700;
+}
 
-/* TABLETS */
+.ifood-float:hover,
+.ifood-float:active {
+    transform: scale(1.05);
+    background: #c9151f;
+    box-shadow: 0 6px 30px rgba(234, 29, 44, 0.9);
+}
+
+.ifood-float svg {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
+.ifood-float-label {
+    white-space: nowrap;
+}
+
+/* =========================================================
+   RESPONSIVO — TABLETS
+   ========================================================= */
 @media (max-width: 1024px) {
     .product-name {
         font-size: clamp(1.8rem, 5.5vw, 3.5rem);
     }
     .content {
         padding-right: 30px;
+        width: 58%;
     }
     .product-img {
         width: 42%;
     }
-    .content {
-        width: 58%;
-    }
 }
 
-/* CELULARES */
+/* =========================================================
+   RESPONSIVO — CELULARES
+   ========================================================= */
 @media (max-width: 768px) {
 
     header {
         padding: 12px 20px;
     }
 
-    /* Mostra o botão hambúrguer */
     .menu-toggle {
         display: flex;
     }
 
-    /* Menu vira painel lateral deslizante */
     header nav {
         position: fixed;
         top: 0;
@@ -529,7 +634,6 @@ header nav ul li:hover::after {
         border-bottom: 1px solid rgba(255, 215, 0, 0.15);
     }
 
-    /* Layout do item em coluna */
     .item {
         flex-direction: column;
         justify-content: flex-start;
@@ -575,12 +679,11 @@ header nav ul li:hover::after {
         max-width: 95%;
     }
 
-    .btn {
-        padding: 12px 28px;
+    .ifood-link {
+        padding: 12px 22px;
         font-size: 0.85rem;
     }
 
-    /* Setas menores e mais próximas das bordas */
     .arrows {
         width: 96%;
         top: 32%;
@@ -591,7 +694,6 @@ header nav ul li:hover::after {
         height: 40px;
     }
 
-    /* Indicadores menores */
     .indicators {
         bottom: 15px;
         gap: 6px;
@@ -611,14 +713,36 @@ header nav ul li:hover::after {
         width: 38px;
     }
 
-    /* Círculos menores para não poluir */
     .circle:nth-child(1) { width: 120px; height: 120px; }
     .circle:nth-child(2) { width: 180px; height: 180px; }
     .circle:nth-child(3) { width: 100px; height: 100px; }
     .circle:nth-child(4) { width: 80px; height: 80px; }
+
+    /* Botão flutuante do iFood no mobile: só o ícone redondo */
+    .ifood-float {
+        bottom: 15px;
+        right: 15px;
+        height: 56px;
+        width: 56px;
+        padding: 0;
+        border-radius: 50%;
+        gap: 0;
+    }
+
+    .ifood-float svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Esconde o texto "Pedir no iFood" no mobile */
+    .ifood-float-label {
+        display: none;
+    }
 }
 
-/* CELULARES PEQUENOS */
+/* =========================================================
+   RESPONSIVO — CELULARES PEQUENOS
+   ========================================================= */
 @media (max-width: 400px) {
     .logo {
         font-size: 1.2rem;
@@ -630,6 +754,15 @@ header nav ul li:hover::after {
     .description {
         font-size: 0.8rem;
     }
+    .ifood-link {
+        padding: 11px 18px;
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+    .ifood-link .ifood-icon {
+        width: 18px;
+        height: 18px;
+    }
     .arrow-btn {
         width: 36px;
         height: 36px;
@@ -637,9 +770,21 @@ header nav ul li:hover::after {
     .arrows {
         top: 30%;
     }
+    .ifood-float {
+        bottom: 12px;
+        right: 12px;
+        width: 52px;
+        height: 52px;
+    }
+    .ifood-float svg {
+        width: 26px;
+        height: 26px;
+    }
 }
 
-/* CELULAR DEITADO (landscape) */
+/* =========================================================
+   RESPONSIVO — CELULAR DEITADO (landscape)
+   ========================================================= */
 @media (max-width: 900px) and (orientation: landscape) {
     .item {
         flex-direction: row;
@@ -686,5 +831,26 @@ header nav ul li:hover::after {
 
     .numbers {
         font-size: 1.5rem;
+    }
+
+    /* Em landscape o botão volta a mostrar o texto (tem espaço sobrando) */
+    .ifood-float {
+        bottom: 15px;
+        right: 15px;
+        width: auto;
+        height: 52px;
+        padding: 0 20px 0 16px;
+        border-radius: 50px;
+        gap: 8px;
+    }
+
+    .ifood-float-label {
+        display: inline;
+        font-size: 0.85rem;
+    }
+
+    .ifood-float svg {
+        width: 24px;
+        height: 24px;
     }
 }
