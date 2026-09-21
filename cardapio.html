@@ -179,7 +179,7 @@
             </div>
             <div class="rodape-col">
                 <h3>Contato</h3>
-                <p>Faça seu pedido no Ifood</p>
+                <p>Faça seu pedido no iFood</p>
                 <p>Instagram: @japatatas</p>
                 <p>Londrina - PR</p>
             </div>
@@ -205,6 +205,38 @@
         <span class="ifood-float-label">Pedir no iFood</span>
     </a>
 
-    <script src="script.js"></script>
+    <!-- Script do menu — inline para funcionar sempre -->
+    <script>
+        (function () {
+            var menuToggle = document.getElementById('menuToggle');
+            var navMenu = document.getElementById('navMenu');
+
+            if (!menuToggle || !navMenu) return;
+
+            menuToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Fecha o menu ao clicar em qualquer link dentro dele
+            navMenu.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+
+            // Fecha o menu ao clicar fora
+            document.addEventListener('click', function (e) {
+                if (navMenu.classList.contains('active') &&
+                    !navMenu.contains(e.target) &&
+                    !menuToggle.contains(e.target)) {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
