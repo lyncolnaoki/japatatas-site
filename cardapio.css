@@ -1,24 +1,225 @@
 /* =========================================================
-   JAPATATAS — Página Cardápio
+   JAPATATAS — Cardápio (compacto + preços + botão IFOOD)
    ========================================================= */
 
 .cardapio-page {
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     min-height: 100vh;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(227, 6, 19, 0.25) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(255, 140, 0, 0.2) 0%, transparent 50%),
+    position: relative;
+    background-color: #1a0505;
+}
+
+/* HEADER — Logo + frase piscando */
+.logo-bloco { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+.logo-sub {
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(.55rem, 1.4vw, .75rem);
+    font-weight: 700;
+    color: #ffd700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    white-space: nowrap;
+    animation: piscarHeader 1.4s ease-in-out infinite;
+    text-shadow: 0 0 8px rgba(255,215,0,.9), 0 0 16px rgba(255,140,0,.6);
+}
+@keyframes piscarHeader {
+    0%, 100% { opacity: 1; text-shadow: 0 0 8px rgba(255,215,0,.9), 0 0 16px rgba(255,140,0,.6); }
+    50%      { opacity: .35; text-shadow: 0 0 4px rgba(255,215,0,.4), 0 0 8px rgba(255,140,0,.3); }
+}
+
+/* FUNDO — brilhos pulsando */
+.cardapio-page::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(ellipse at 0% 35%, rgba(227,6,19,.55) 0%, transparent 45%),
+        radial-gradient(ellipse at 100% 65%, rgba(255,140,0,.45) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255,215,0,.12) 0%, transparent 65%),
         linear-gradient(135deg, #1a0505 0%, #2b0a0a 50%, #1a0505 100%);
+    animation: brilhoPulsa 3.5s ease-in-out infinite alternate;
+}
+@keyframes brilhoPulsa {
+    0%   { opacity: .75; transform: scale(1); }
+    50%  { opacity: 1;   transform: scale(1.08); }
+    100% { opacity: .85; transform: scale(1.02); }
 }
 
-.cardapio-page .container {
-    display: none;
+/* FRASE FLUTUANTE "PEÇA AGORA NO IFOOD" */
+.peca-agora-float {
+    position: fixed;
+    top: 12%;
+    left: 3%;
+    z-index: 5;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: pecaAgoraPulsa 3s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+.peca-linha-1 {
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(1.3rem, 3vw, 2.2rem);
+    font-weight: 900;
+    color: #ffd700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 4px;
+    text-shadow: 2px 2px 0 #e30613, 0 0 20px rgba(255,140,0,.9), 0 0 40px rgba(227,6,19,.6);
+}
+.peca-linha-2 {
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(1.5rem, 3.6vw, 2.6rem);
+    font-weight: 900;
+    color: #EA1D2C;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 6px 18px;
+    border: 3px solid #ffd700;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(26,5,5,.85), rgba(43,10,10,.85));
+    text-shadow: 2px 2px 0 #ffd700, 0 0 25px rgba(234,29,44,1), 0 0 50px rgba(255,215,0,.7);
+    box-shadow: 0 0 25px rgba(234,29,44,.8), inset 0 0 15px rgba(255,215,0,.2);
+}
+@keyframes pecaAgoraPulsa {
+    0%   { transform: scale(1) translateY(0);     opacity: .75; }
+    25%  { transform: scale(1.08) translateY(-6px);  opacity: 1; }
+    50%  { transform: scale(1.15) translateY(-10px); opacity: 1; }
+    75%  { transform: scale(1.08) translateY(-6px);  opacity: 1; }
+    100% { transform: scale(1) translateY(0);     opacity: .75; }
 }
 
-/* =========================================================
-   CONTAINER
-   ========================================================= */
+/* CÍRCULOS FLUTUANTES */
+.circulos-fundo { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.circulo {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(255,215,0,.18);
+    background: radial-gradient(circle at 30% 30%, rgba(255,140,0,.1) 0%, transparent 70%);
+    animation: flutuarCirculo linear infinite;
+    will-change: transform;
+    box-shadow: 0 0 30px rgba(255,140,0,.15);
+}
+.circulo:nth-child(1)  { width: 420px; height: 420px; top: 8%;    left: -120px;  border-color: rgba(227,6,19,.3);  animation-duration: 8s;   animation-delay: 0s;   }
+.circulo:nth-child(2)  { width: 300px; height: 300px; top: 12%;   right: -80px;  border-color: rgba(255,215,0,.25); animation-duration: 7s;   animation-delay: .5s;  }
+.circulo:nth-child(3)  { width: 200px; height: 200px; top: 42%;   left: 5%;      border-color: rgba(255,140,0,.3);  animation-duration: 6s;   animation-delay: 1s;   }
+.circulo:nth-child(4)  { width: 360px; height: 360px; bottom: 8%; right: -100px; border-color: rgba(227,6,19,.28); animation-duration: 9s;   animation-delay: .3s;  }
+.circulo:nth-child(5)  { width: 260px; height: 260px; bottom: 5%; left: 3%;      border-color: rgba(255,215,0,.22); animation-duration: 7.5s; animation-delay: 1.5s; }
+.circulo:nth-child(6)  { width: 160px; height: 160px; top: 3%;    left: 45%;     border-color: rgba(255,140,0,.28); animation-duration: 5.5s; animation-delay: .8s;  }
+.circulo:nth-child(7)  { width: 240px; height: 240px; top: 48%;   right: 8%;     border-color: rgba(227,6,19,.25);  animation-duration: 6.5s; animation-delay: 2s;   }
+.circulo:nth-child(8)  { width: 180px; height: 180px; bottom: 15%; right: 22%;  border-color: rgba(255,215,0,.2);  animation-duration: 6s;   animation-delay: 1.2s; }
+.circulo:nth-child(9)  { width: 220px; height: 220px; top: 25%;   left: 30%;     border-color: rgba(255,140,0,.22); animation-duration: 7s;   animation-delay: .6s;  }
+.circulo:nth-child(10) { width: 280px; height: 280px; top: 65%;   left: 55%;     border-color: rgba(227,6,19,.2);   animation-duration: 8.5s; animation-delay: 1.8s; }
+@keyframes flutuarCirculo {
+    0%   { transform: translate(0,0)     scale(1)    rotate(0deg);   opacity: .6; }
+    20%  { transform: translate(40px,-60px) scale(1.15) rotate(72deg);  opacity: 1; }
+    40%  { transform: translate(-30px,-90px) scale(.9)  rotate(144deg); opacity: .75; }
+    60%  { transform: translate(50px,-40px) scale(1.1)  rotate(216deg); opacity: .95; }
+    80%  { transform: translate(-20px,-20px) scale(1.05) rotate(288deg); opacity: .85; }
+    100% { transform: translate(0,0)     scale(1)    rotate(360deg); opacity: .6; }
+}
+
+/* LOGO "JAPATATAS" DE FUNDO */
+.cardapio-page::before {
+    content: 'JAPATATAS';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(8rem, 22vw, 20rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 2.5px rgba(255,215,0,.1);
+    letter-spacing: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    text-transform: uppercase;
+    user-select: none;
+    transform: translate(-50%,-50%) rotate(-12deg);
+    animation: logoFlutua 6s ease-in-out infinite;
+}
+@keyframes logoFlutua {
+    0%   { transform: translate(-50%,-50%) rotate(-12deg) scale(1);      opacity: .6;  -webkit-text-stroke: 2.5px rgba(255,215,0,.08); }
+    25%  { transform: translate(-50%, calc(-50% - 35px)) rotate(-6deg) scale(1.06); opacity: 1;   -webkit-text-stroke: 2.5px rgba(255,215,0,.16); }
+    50%  { transform: translate(-50%, calc(-50% + 25px)) rotate(-16deg) scale(1.1); opacity: .95; -webkit-text-stroke: 2.5px rgba(255,215,0,.2); }
+    75%  { transform: translate(-50%, calc(-50% - 20px)) rotate(-8deg) scale(1.04); opacity: .85; -webkit-text-stroke: 2.5px rgba(255,215,0,.14); }
+    100% { transform: translate(-50%,-50%) rotate(-12deg) scale(1);      opacity: .6;  -webkit-text-stroke: 2.5px rgba(255,215,0,.08); }
+}
+
+/* PARTÍCULAS */
+.particulas { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.particula {
+    position: absolute;
+    bottom: -30px;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #ffd700 0%, #ff8c00 60%, transparent 100%);
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow: 0 0 12px rgba(255,215,0,.9), 0 0 24px rgba(255,140,0,.6);
+    animation: subirParticula linear infinite;
+}
+.particula:nth-child(1)  { left: 3%;  animation-delay: 0s;   animation-duration: 7s;   width: 6px;  height: 6px;  }
+.particula:nth-child(2)  { left: 9%;  animation-delay: 1.2s; animation-duration: 9s;   width: 10px; height: 10px; }
+.particula:nth-child(3)  { left: 16%; animation-delay: 2.5s; animation-duration: 8s;   width: 5px;  height: 5px;  }
+.particula:nth-child(4)  { left: 23%; animation-delay: .6s;  animation-duration: 10s;  width: 8px;  height: 8px;  }
+.particula:nth-child(5)  { left: 30%; animation-delay: 3.2s; animation-duration: 7.5s; width: 7px;  height: 7px;  }
+.particula:nth-child(6)  { left: 38%; animation-delay: 1.8s; animation-duration: 11s;  width: 12px; height: 12px; }
+.particula:nth-child(7)  { left: 45%; animation-delay: 4.5s; animation-duration: 8.5s; width: 6px;  height: 6px;  }
+.particula:nth-child(8)  { left: 52%; animation-delay: 2.2s; animation-duration: 9.5s; width: 9px;  height: 9px;  }
+.particula:nth-child(9)  { left: 59%; animation-delay: 5.5s; animation-duration: 7s;   width: 5px;  height: 5px;  }
+.particula:nth-child(10) { left: 66%; animation-delay: .9s;  animation-duration: 10.5s;width: 11px; height: 11px; }
+.particula:nth-child(11) { left: 73%; animation-delay: 3.8s; animation-duration: 8s;   width: 7px;  height: 7px;  }
+.particula:nth-child(12) { left: 80%; animation-delay: 1.5s; animation-duration: 9s;   width: 6px;  height: 6px;  }
+.particula:nth-child(13) { left: 87%; animation-delay: 4.2s; animation-duration: 7.5s; width: 8px;  height: 8px;  }
+.particula:nth-child(14) { left: 93%; animation-delay: 2.8s; animation-duration: 10s;  width: 10px; height: 10px; }
+.particula:nth-child(15) { left: 13%; animation-delay: 5.8s; animation-duration: 8.5s; width: 6px;  height: 6px;  }
+.particula:nth-child(16) { left: 35%; animation-delay: .3s;  animation-duration: 11.5s;width: 9px;  height: 9px;  }
+.particula:nth-child(17) { left: 48%; animation-delay: 6.2s; animation-duration: 9s;   width: 7px;  height: 7px;  }
+.particula:nth-child(18) { left: 62%; animation-delay: 3.5s; animation-duration: 8s;   width: 5px;  height: 5px;  }
+.particula:nth-child(19) { left: 76%; animation-delay: 5.2s; animation-duration: 10.5s;width: 8px;  height: 8px;  }
+.particula:nth-child(20) { left: 90%; animation-delay: 1s;   animation-duration: 9.5s; width: 11px; height: 11px; }
+@keyframes subirParticula {
+    0%   { transform: translateY(0)      translateX(0)   rotate(0deg)   scale(.5); opacity: 0; }
+    10%  { transform: translateY(-10vh)  translateX(15px) rotate(36deg) scale(1);  opacity: 1; }
+    50%  { transform: translateY(-55vh)  translateX(-25px) rotate(180deg) scale(1.2); opacity: 1; }
+    90%  { transform: translateY(-100vh) translateX(20px) rotate(324deg) scale(1);  opacity: .7; }
+    100% { transform: translateY(-115vh) translateX(-10px) rotate(360deg) scale(.5); opacity: 0; }
+}
+
+/* SHINE DIAGONAL */
+.cardapio-page .shine {
+    position: fixed;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(120deg, transparent 42%, rgba(255,215,0,.12) 50%, transparent 58%);
+    pointer-events: none;
+    z-index: 1;
+    animation: shineDiagonal 5s ease-in-out infinite;
+}
+@keyframes shineDiagonal {
+    0%   { transform: translateX(-100%) translateY(-100%) rotate(0deg); opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateX(100%) translateY(100%) rotate(0deg);  opacity: 0; }
+}
+
+/* CONTEÚDO ACIMA DO FUNDO */
+.cardapio-container,
+.rodape { position: relative; z-index: 2; }
+.cardapio-page .container { display: none; }
+.cardapio-page header { z-index: 1000; }
+.cardapio-page header nav.active { z-index: 1001; }
+
+/* CONTAINER PRINCIPAL */
 .cardapio-container {
     width: 100%;
     max-width: 1200px;
@@ -28,9 +229,7 @@
     z-index: 2;
 }
 
-/* =========================================================
-   HERO
-   ========================================================= */
+/* HERO */
 .cardapio-hero {
     text-align: center;
     margin-bottom: 40px;
@@ -38,68 +237,52 @@
     flex-direction: column;
     align-items: center;
 }
-
-.cardapio-tag {
-    margin-bottom: 14px;
-}
-
+.cardapio-tag { margin-bottom: 14px; }
 .cardapio-title {
     font-family: "Orbitron", sans-serif;
     font-size: clamp(2.2rem, 8vw, 4.5rem);
     font-weight: 900;
     color: #ffd700;
-    text-shadow: 
-        3px 3px 0 #e30613,
-        0 0 30px rgba(255, 140, 0, 0.6);
+    text-shadow: 3px 3px 0 #e30613, 0 0 30px rgba(255,140,0,.6);
     letter-spacing: 3px;
     text-transform: uppercase;
     margin-bottom: 16px;
+    animation: tituloPulsa 3s ease-in-out infinite;
 }
-
+@keyframes tituloPulsa {
+    0%, 100% { text-shadow: 3px 3px 0 #e30613, 0 0 30px rgba(255,140,0,.6); }
+    50%      { text-shadow: 3px 3px 0 #e30613, 0 0 50px rgba(255,215,0,.9), 0 0 80px rgba(255,140,0,.5); }
+}
 .cardapio-subtitle {
-    font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+    font-size: clamp(.9rem, 2.2vw, 1.05rem);
     color: #ffe8c4;
     line-height: 1.6;
     max-width: 640px;
 }
 
-/* =========================================================
-   GRADE
-   ========================================================= */
+/* GRADE + CARD */
 .cardapio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 28px;
     margin-bottom: 60px;
 }
-
-/* =========================================================
-   CARD
-   ========================================================= */
 .card {
     background: linear-gradient(160deg, #2b0a0a 0%, #1a0505 100%);
-    border: 2px solid rgba(255, 215, 0, 0.25);
+    border: 2px solid rgba(255,215,0,.25);
     border-radius: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 
-        0 0 25px rgba(227, 6, 19, 0.25),
-        0 4px 15px rgba(0, 0, 0, 0.5);
-    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    box-shadow: 0 0 25px rgba(227,6,19,.25), 0 4px 15px rgba(0,0,0,.5);
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
     position: relative;
 }
-
 .card:hover {
     transform: translateY(-6px);
     border-color: #ffd700;
-    box-shadow: 
-        0 0 35px rgba(227, 6, 19, 0.55),
-        0 0 60px rgba(255, 140, 0, 0.3),
-        0 10px 25px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 35px rgba(227,6,19,.55), 0 0 60px rgba(255,140,0,.3), 0 10px 25px rgba(0,0,0,.6);
 }
-
-/* Imagem */
 .card-img {
     position: relative;
     width: 100%;
@@ -110,68 +293,129 @@
     align-items: center;
     justify-content: center;
 }
-
 .card-img img {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform .5s ease;
 }
+.card:hover .card-img img { transform: scale(1.08); }
 
-.card:hover .card-img img {
-    transform: scale(1.08);
-}
-
-/* Badge */
 .card-badge {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    top: 14px; left: 14px;
     padding: 6px 14px;
     background: linear-gradient(90deg, #e30613, #ff8c00);
     color: #ffd700;
-    font-size: 0.7rem;
+    font-size: .7rem;
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     border-radius: 30px;
     border: 1px solid #ffd700;
-    box-shadow: 0 0 12px rgba(227, 6, 19, 0.7);
+    box-shadow: 0 0 12px rgba(227,6,19,.7);
     z-index: 2;
 }
+.card-badge.novo { background: linear-gradient(90deg, #ff8c00, #ffd700); color: #1a0505; }
 
-.card-badge.novo {
-    background: linear-gradient(90deg, #ff8c00, #ffd700);
-    color: #1a0505;
-}
-
-/* Corpo */
-.card-body {
-    padding: 20px 20px 22px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 10px;
-}
-
+.card-body { padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1; gap: 10px; }
 .card-title {
     font-family: "Orbitron", sans-serif;
     font-size: clamp(1.15rem, 3vw, 1.35rem);
     font-weight: 800;
     color: #ffd700;
-    text-shadow: 2px 2px 0 #e30613, 0 0 15px rgba(255, 140, 0, 0.4);
+    text-shadow: 2px 2px 0 #e30613, 0 0 15px rgba(255,140,0,.4);
     line-height: 1.2;
-    letter-spacing: 0.5px;
+    letter-spacing: .5px;
+}
+.card-desc { font-size: .9rem; color: #ffe8c4; line-height: 1.55; flex: 1; }
+
+/* =========================================================
+   PREÇO — MENOR, ALINHADO À ESQUERDA
+   ========================================================= */
+.card-price {
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(1.05rem, 2.6vw, 1.3rem);   /* ← menor */
+    font-weight: 900;
+    color: #ffb300;
+    letter-spacing: 1px;
+    margin: 10px 0 8px;
+    padding: 6px 14px;                           /* ← menor */
+    display: inline-block;
+    align-self: flex-start;                      /* ← alinhado à esquerda */
+    border: 2px solid #e30613;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255,179,0,.12) 0%, rgba(255,140,0,.08) 100%);
+    text-shadow:
+        0 0 10px rgba(255,179,0,.9),
+        0 0 20px rgba(255,140,0,.6),
+        2px 2px 0 rgba(227,6,19,.8);
+    box-shadow:
+        0 0 15px rgba(227,6,19,.6),
+        0 0 25px rgba(255,140,0,.3),
+        inset 0 0 10px rgba(255,179,0,.15);
+    animation: precoPulsa 2s ease-in-out infinite;
+    position: relative;
+    z-index: 3;
+}
+@keyframes precoPulsa {
+    0%, 100% {
+        box-shadow:
+            0 0 15px rgba(227,6,19,.6),
+            0 0 25px rgba(255,140,0,.3),
+            inset 0 0 10px rgba(255,179,0,.15);
+        border-color: #e30613;
+    }
+    50% {
+        box-shadow:
+            0 0 25px rgba(227,6,19,.95),
+            0 0 45px rgba(255,140,0,.7),
+            inset 0 0 15px rgba(255,179,0,.3);
+        border-color: #ff8c00;
+    }
 }
 
-.card-desc {
-    font-size: 0.9rem;
-    color: #ffe8c4;
-    line-height: 1.55;
-    flex: 1;
+/* =========================================================
+   BOTÃO IFOOD — MAIOR QUE O PREÇO + CENTRALIZADO
+   ========================================================= */
+.ifood-btn {
+    display: block;
+    align-self: center;                          /* ← centralizado */
+    min-width: 65%;                              /* ← maior que o preço */
+    padding: 12px 28px;                          /* ← maior */
+    margin: 4px auto 6px;
+    background: linear-gradient(135deg, #EA1D2C 0%, #c9151f 100%);
+    color: #fff;
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(1rem, 2.4vw, 1.2rem);      /* ← maior */
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    box-shadow:
+        0 0 18px rgba(234,29,44,.75),
+        0 4px 12px rgba(0,0,0,.5),
+        inset 0 0 10px rgba(255,255,255,.12);
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+    transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+.ifood-btn:hover,
+.ifood-btn:active {
+    background: linear-gradient(135deg, #ff2436 0%, #EA1D2C 100%);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow:
+        0 0 32px rgba(234,29,44,1),
+        0 8px 18px rgba(0,0,0,.6),
+        inset 0 0 14px rgba(255,215,0,.25);
+    color: #fff;
 }
 
-/* Rodapé do card */
+/* Mantém o card-footer (compatibilidade) */
 .card-footer {
     margin-top: 8px;
     display: flex;
@@ -181,106 +425,89 @@
     flex-wrap: wrap;
 }
 
-/* =========================================================
-   LINK iFOOD (dentro do card)
-   ========================================================= */
+/* BOTÃO iFOOD ANTIGO (link com ícone) — usado no CTA */
 .ifood-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     background: #EA1D2C;
-    color: #ffffff;
+    color: #fff;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: .85rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     padding: 10px 18px;
     border-radius: 50px;
     border: 2px solid #ffd700;
-    box-shadow: 
-        0 0 15px rgba(234, 29, 44, 0.55),
-        0 3px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 15px rgba(234,29,44,.55), 0 3px 10px rgba(0,0,0,.4);
     text-decoration: none;
     cursor: pointer;
     position: relative;
     z-index: 10;
-    pointer-events: auto;
     touch-action: manipulation;
-    transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+    transition: background .3s ease, transform .25s ease, box-shadow .3s ease;
 }
-
 .ifood-link:hover,
 .ifood-link:active {
     background: #c9151f;
     transform: scale(1.05);
-    box-shadow: 
-        0 0 25px rgba(234, 29, 44, 0.9),
-        0 6px 18px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 25px rgba(234,29,44,.9), 0 6px 18px rgba(0,0,0,.5);
     color: #fff;
 }
+.ifood-icon { width: 20px; height: 20px; flex-shrink: 0; fill: currentColor; }
+.ifood-link-large { padding: 16px 32px; font-size: 1rem; gap: 12px; }
+.ifood-link-large .ifood-icon { width: 26px; height: 26px; }
 
-.ifood-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    fill: currentColor;
-}
-
-.ifood-link-large {
-    padding: 16px 32px;
-    font-size: 1rem;
-    gap: 12px;
-}
-
-.ifood-link-large .ifood-icon {
-    width: 26px;
-    height: 26px;
-}
-
-/* =========================================================
-   CTA FINAL
-   ========================================================= */
+/* CTA FINAL */
 .cardapio-cta {
     text-align: center;
     padding: 50px 25px;
     background: linear-gradient(160deg, #2b0a0a 0%, #1a0505 100%);
-    border: 2px solid rgba(255, 215, 0, 0.3);
+    border: 2px solid rgba(255,215,0,.3);
     border-radius: 22px;
-    box-shadow: 
-        0 0 30px rgba(227, 6, 19, 0.3),
-        0 6px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 30px rgba(227,6,19,.3), 0 6px 20px rgba(0,0,0,.5);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 14px;
+    position: relative;
+    overflow: hidden;
 }
-
+.cardapio-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,.12), transparent);
+    animation: ctaShine 4s ease-in-out infinite;
+}
+@keyframes ctaShine {
+    0%   { left: -100%; }
+    50%  { left: 100%; }
+    100% { left: 100%; }
+}
 .cardapio-cta h2 {
     font-family: "Orbitron", sans-serif;
     font-size: clamp(1.4rem, 4vw, 2rem);
     color: #ffd700;
     text-shadow: 2px 2px 0 #e30613;
     letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
 }
+.cardapio-cta p { color: #ffe8c4; font-size: clamp(.9rem, 2vw, 1rem); margin-bottom: 8px; position: relative; z-index: 1; }
+.cardapio-cta .ifood-link-large { position: relative; z-index: 1; }
 
-.cardapio-cta p {
-    color: #ffe8c4;
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    margin-bottom: 8px;
-}
-
-/* =========================================================
-   RODAPÉ
-   ========================================================= */
+/* RODAPÉ */
 .rodape {
     position: relative;
     padding: 45px 25px 25px;
-    background: linear-gradient(180deg, rgba(26, 5, 5, 0) 0%, #0f0303 100%);
-    border-top: 1px solid rgba(255, 215, 0, 0.15);
+    background: linear-gradient(180deg, rgba(26,5,5,0) 0%, #0f0303 100%);
+    border-top: 1px solid rgba(255,215,0,.15);
     margin-top: 40px;
+    z-index: 3;
 }
-
 .rodape-conteudo {
     max-width: 1100px;
     margin: 0 auto 30px;
@@ -288,7 +515,6 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
 }
-
 .rodape-col h3 {
     font-family: "Orbitron", sans-serif;
     font-size: 1rem;
@@ -297,154 +523,87 @@
     margin-bottom: 12px;
     text-shadow: 1px 1px 0 #e30613;
 }
-
-.rodape-col p {
-    color: #ffe8c4;
-    font-size: 0.9rem;
-    line-height: 1.7;
-}
-
+.rodape-col p { color: #ffe8c4; font-size: .9rem; line-height: 1.7; }
 .rodape-copy {
     text-align: center;
-    color: rgba(255, 232, 196, 0.5);
-    font-size: 0.8rem;
+    color: rgba(255,232,196,.5);
+    font-size: .8rem;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    border-top: 1px solid rgba(255,215,0,.1);
 }
+
+/* LINK ATIVO NO MENU */
+header nav ul li a { color: inherit; text-decoration: none; font-weight: inherit; }
+header nav ul li a.active-link { color: #ff8c00; }
 
 /* =========================================================
-   HEADER — link ativo
-   ========================================================= */
-header nav ul li a {
-    color: inherit;
-    text-decoration: none;
-    font-weight: inherit;
-}
-
-header nav ul li a.active-link {
-    color: #ff8c00;
-}
-
-/* =========================================================
-   RESPONSIVO — CELULARES
+   RESPONSIVO
    ========================================================= */
 @media (max-width: 768px) {
-
-    .cardapio-container {
-        padding: 100px 18px 130px;
-    }
-
-    .cardapio-hero {
-        margin-bottom: 30px;
-    }
-
-    .cardapio-grid {
-        grid-template-columns: 1fr;
-        gap: 22px;
-        margin-bottom: 40px;
-    }
-
-    .card-img {
-        height: 190px;
-    }
-
-    .card-body {
-        padding: 18px;
-    }
-
-    .card-desc {
-        font-size: 0.85rem;
-    }
-
-    .ifood-link {
-        padding: 10px 16px;
-        font-size: 0.78rem;
-    }
-
-    .ifood-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    .cardapio-cta {
-        padding: 35px 18px;
-    }
-
-    .rodape {
-        padding: 35px 18px 20px;
-    }
+    .cardapio-container { padding: 100px 18px 130px; }
+    .cardapio-hero      { margin-bottom: 30px; }
+    .cardapio-grid      { grid-template-columns: 1fr; gap: 22px; margin-bottom: 40px; }
+    .card-img           { height: 190px; }
+    .card-body          { padding: 18px; }
+    .card-desc          { font-size: .85rem; }
+    .card-price         { font-size: 1.05rem; padding: 5px 12px; }
+    .ifood-btn          { padding: 11px 24px; font-size: .98rem; letter-spacing: 3px; min-width: 60%; }
+    .ifood-link         { padding: 10px 16px; font-size: .78rem; }
+    .ifood-icon         { width: 18px; height: 18px; }
+    .cardapio-cta       { padding: 35px 18px; }
+    .rodape             { padding: 35px 18px 20px; }
+    .cardapio-page::before { font-size: clamp(5rem, 40vw, 9rem); letter-spacing: 8px; -webkit-text-stroke: 1.5px rgba(255,215,0,.1); }
+    .peca-agora-float   { top: 9%; left: 50%; transform: translateX(-50%); }
+    .peca-linha-1       { font-size: 1rem; }
+    .peca-linha-2       { font-size: 1.2rem; padding: 5px 12px; border-width: 2px; }
+    .logo-sub           { font-size: .55rem; letter-spacing: 2px; margin-top: 3px; }
+    .circulo:nth-child(1)  { width: 240px; height: 240px; }
+        .circulo:nth-child(1)  { width: 240px; height: 240px; }
+    .circulo:nth-child(2)  { width: 180px; height: 180px; }
+    .circulo:nth-child(3)  { width: 130px; height: 130px; }
+    .circulo:nth-child(4)  { width: 220px; height: 220px; }
+    .circulo:nth-child(5)  { width: 160px; height: 160px; }
+    .circulo:nth-child(6)  { width: 100px; height: 100px; }
+    .circulo:nth-child(7)  { width: 150px; height: 150px; }
+    .circulo:nth-child(8)  { width: 120px; height: 120px; }
+    .circulo:nth-child(9)  { width: 140px; height: 140px; }
+    .circulo:nth-child(10) { width: 170px; height: 170px; }
+    .particula:nth-child(n+13) { display: none; }
 }
 
 /* =========================================================
    RESPONSIVO — CELULARES PEQUENOS
    ========================================================= */
 @media (max-width: 400px) {
-    .cardapio-title {
-        font-size: 2rem;
-    }
+    .cardapio-title { font-size: 2rem; }
+    .card-title     { font-size: 1.05rem; }
+    .card-img       { height: 165px; }
+    .card-badge     { font-size: .62rem; padding: 5px 10px; }
+    .card-price     { font-size: 1rem; padding: 5px 12px; }
+    .ifood-btn      { padding: 10px 20px; font-size: .9rem; letter-spacing: 2.5px; min-width: 55%; }
+    .ifood-link     { font-size: .72rem; padding: 9px 14px; gap: 6px; }
+    .ifood-link .ifood-icon { width: 16px; height: 16px; }
+    .cardapio-page::before { font-size: 5rem; letter-spacing: 6px; }
+    .peca-linha-1 { font-size: .85rem; letter-spacing: 1px; }
+    .peca-linha-2 { font-size: 1rem; padding: 4px 10px; letter-spacing: 2px; }
+    .logo-sub     { font-size: .48rem; letter-spacing: 1.5px; }
+    .particula:nth-child(n+9) { display: none; }
+}
 
-    .card-title {
-        font-size: 1.05rem;
-    }
-
-    .card-img {
-        height: 165px;
-    }
-
-    .card-badge {
-        font-size: 0.62rem;
-        padding: 5px 10px;
-    }
-
-    .ifood-link {
-        font-size: 0.72rem;
-        padding: 9px 14px;
-        gap: 6px;
-    }
-
-    .ifood-link .ifood-icon {
-        width: 16px;
-        height: 16px;
-    }
-    /* =========================================================
-   RODAPÉ (index)
+/* =========================================================
+   ACESSIBILIDADE — respeita "reduzir movimento"
    ========================================================= */
-.rodape {
-    position: relative;
-    padding: 45px 25px 25px;
-    background: linear-gradient(180deg, rgba(26, 5, 5, 0) 0%, #0f0303 100%);
-    border-top: 1px solid rgba(255, 215, 0, 0.15);
-    z-index: 3;
-}
-
-.rodape-conteudo {
-    max-width: 1100px;
-    margin: 0 auto 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-}
-
-.rodape-col h3 {
-    font-family: "Orbitron", sans-serif;
-    font-size: 1rem;
-    color: #ffd700;
-    letter-spacing: 1.5px;
-    margin-bottom: 12px;
-    text-shadow: 1px 1px 0 #e30613;
-}
-
-.rodape-col p {
-    color: #ffe8c4;
-    font-size: 0.9rem;
-    line-height: 1.7;
-}
-
-.rodape-copy {
-    text-align: center;
-    color: rgba(255, 232, 196, 0.5);
-    font-size: 0.8rem;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 215, 0, 0.1);
-}
+@media (prefers-reduced-motion: reduce) {
+    .cardapio-page::before,
+    .cardapio-page::after,
+    .circulo,
+    .particula,
+    .shine,
+    .cardapio-title,
+    .cardapio-cta::before,
+    .peca-agora-float,
+    .logo-sub,
+    .card-price {
+        animation: none !important;
+    }
 }
