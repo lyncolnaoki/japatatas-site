@@ -526,7 +526,7 @@
 .rodape-col p { color: #ffe8c4; font-size: .9rem; line-height: 1.7; }
 .rodape-copy {
     text-align: center;
-    color: rgba(255,232,196,.5);
+    color: rgba(255,232,196,0.5);
     font-size: .8rem;
     padding-top: 20px;
     border-top: 1px solid rgba(255,215,0,.1);
